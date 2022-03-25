@@ -1,0 +1,49 @@
+"Represents Econt office address"
+type EcontOfficeAddress {
+  "The street address / first line"
+  address1: String!
+
+  "Optional second line"
+  address2: String
+
+  "City"
+  city: String!
+
+  "Optional company name, if it's a business address"
+  company: String
+
+  "Country"
+  country: String!
+
+  "Is this the default address for billing purposes?"
+  isBillingDefault: Boolean
+
+  "Is this a commercial address?"
+  isCommercial: Boolean!
+
+  "Is this the default address to use when selecting a shipping address at checkout?"
+  isShippingDefault: Boolean
+
+  "Arbitrary additional metadata about this address"
+  metafields: [Metafield]
+
+  "Postal code"
+  postal: String!
+
+  "Region. For example, a U.S. state"
+  region: String!
+}
+
+type EcontOffice {
+  "The office ID"
+  _id: ID
+  code: String!
+  name: String,
+  nameEn: String,
+  address: EcontOfficeAddress,
+  phones: [String],
+}
+
+extend type Query {
+  econtOffices: [EcontOffice]
+}
