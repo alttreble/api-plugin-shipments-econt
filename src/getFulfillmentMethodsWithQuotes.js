@@ -33,7 +33,7 @@ function getCourierOfficeCode(shippingAddress) {
  */
 function getItemsTotalWeight(items) {
   return items.reduce((totalWeight, item) =>
-    totalWeight + (item.parcel?.weight || 0), 0);
+    totalWeight + ((item.parcel?.weight || 0) * item.quantity), 0);
 }
 
 /**
@@ -83,7 +83,7 @@ export default async function getFulfillmentMethodsWithQuotes(context, commonOrd
       senderOfficeCode,
       receiverOfficeCode,
       weight: getItemsTotalWeight(items),
-      packCount: items.length,
+      packCount: items.reduce((total, item) => total + item.quantity, 0),
       shipmentType: ShipmentType.pack
     }
   });
@@ -98,7 +98,7 @@ export default async function getFulfillmentMethodsWithQuotes(context, commonOrd
         cost: createLabelData.label.totalPrice,
         rate: createLabelData.label.totalPrice,
         handling: 0,
-        name: "EcontOfficeToOffice",
+        name: "Еконт от офис до офис",
         label: "Еконт от офис до офис",
         fulfillmentTypes: ["shipping"],
         enabled: true
