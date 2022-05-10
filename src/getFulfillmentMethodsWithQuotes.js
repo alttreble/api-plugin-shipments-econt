@@ -33,7 +33,7 @@ function getCourierOfficeCode(shippingAddress) {
  */
 function getItemsTotalWeight(items) {
   return items.reduce((totalWeight, item) =>
-    totalWeight + ((item.parcel?.weight || 0) * item.quantity), 0);
+    totalWeight + ((item.parcel?.weight) * item.quantity || 0), 0);
 }
 
 /**
@@ -84,7 +84,10 @@ export default async function getFulfillmentMethodsWithQuotes(context, commonOrd
       receiverOfficeCode,
       weight: getItemsTotalWeight(items),
       packCount: items.reduce((total, item) => total + item.quantity, 0),
-      shipmentType: ShipmentType.pack
+      shipmentType: ShipmentType.pack,
+      services: {
+        moneyTransferAmount: commonOrder.totals.orderTotal.amount
+      }
     }
   });
 
