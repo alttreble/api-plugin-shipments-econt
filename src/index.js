@@ -17,7 +17,13 @@ export default async function register(app) {
     version: pkg.version,
     collections: {
       EcontOffices: {
-        name: "EcontOffices"
+        name: "EcontOffices",
+        indexes: [
+          [{ code: 1 }],
+          [{ name: 1 }],
+          [{ nameEn: 1 }],
+          [{ "address.address1": 1 }]
+        ]
       }
     },
     queries,
